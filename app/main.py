@@ -27,7 +27,7 @@ app = FastAPI()
 # デバイスに関連付けられた場所の名前を返す
 @app.get("/devices")
 async def devices():
-  return {"devices": place_list['place'].keys()}
+  return {"devices": list(place_list['place'].keys())}
 
 # return sound file list
 @app.get("/sounds")
@@ -35,7 +35,7 @@ async def sounds():
   return {"sounds": sounds_list}
 
 # {place_name}でsound_nameを再生
-@app.get("/sounds/{place_name}")
+@app.get("/sounds/{place_name}/{sound_name}")
 async def play_sound(place_name: str, sound_name: str):
   sound_name = sound_dir + sound_name
   try:
