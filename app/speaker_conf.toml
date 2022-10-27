@@ -1,0 +1,6 @@
+[place]
+chainsaw="alsa_output.pci-0000_00_1f.3.analog-stereo"
+op_room1="tunnel.denpa.local.alsa_output.pci-0000_06_00.6.analog-stereo"
+op_room2=""
+op_room3=""
+env_sound="tunnel.denpa.local.alsa_output.pci-0000_06_00.1.hdmi-stereo-extra2"
