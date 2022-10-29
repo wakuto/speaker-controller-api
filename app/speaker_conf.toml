@@ -1,6 +1,4 @@
 [place]
-chainsaw="raspi1.local"
-op_room1="localhost"
-op_room2="localhost"
-op_room3="localhost"
-env_sound="localhost"
+baby="raspi1.local"
+room1="raspi2.local"
+room2="raspi3.local"

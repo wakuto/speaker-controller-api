@@ -27,16 +27,34 @@ async def sounds():
   return {"sounds": sounds_list}
 
 # {place_name}でsound_nameを再生
-@app.get("/sounds/{place_name}/{sound_name}")
+@app.post("/sounds/{place_name}/{sound_name}")
 async def play_sound(place_name: str, sound_name: str):
   try:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-      s.connect((place_list[place_name], 22345))
+      s.connect((place_list[place_name], 12345))
       s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-      s.send(bytes(sound_name, 'utf-8'))
-      msg = s.recv(1024)
-      print(msg.decode("utf-8"))
+      s.send(bytes('play ' + sound_name, 'utf-8'))
     return {"status": "OK"}
   except:
-    return {"status": "Speaker server error"}
+    return {"status": "Speaker play failed"}
+
+# /stop de oto wo tomeru
+@app.post("/stop")
+async def stop_sound():
+  # for all server
+  failed = False
+  for serv in set(place_list.values()):
+    try:
+        print(serv)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+          s.connect((serv, 12345))
+          s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+          s.send(bytes('stop', 'utf-8'))
+    except:
+      failed = True
+  if failed:
+    return {"status": "Speaker stop failed"}
+  else:
+    return {"status": "stop complete"}
